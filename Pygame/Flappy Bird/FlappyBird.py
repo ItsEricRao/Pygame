@@ -1,6 +1,7 @@
 import pygame
 from pygame.locals import *
 from sys import exit
+from random import randint
 # PATH
 path = '../../resources/images/'
 index = 0
@@ -10,15 +11,17 @@ color = (100, 200, 0)
 left = 200
 top = 0
 width = 60
-height = 200
 x_distance = 300
 y_distance = 150
 rect1 = []
 rect2 = []
 for i in range(10):
+    height = randint(200, 400)
     rect1.append([left, top, width, height])
-    rect2.append(left, height + y_distance, width, 600 - height - y_distance)
+    rect2.append([left, height + y_distance, width, 600 - height - y_distance])
     left = left + x_distance
+    x_distance = x_distance - 10
+    y_distance = y_distance - 5
 # initallizing
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
@@ -45,11 +48,12 @@ while True:
     pygame.display.update()
     screen.blit(bg, (0, 0))
     # draw rectangle
-    pygame.draw.rect(screen, color, rect1)
-    pygame.draw.rect(screen, color, rect2)
-    rect1[0] = rect1[0] - 1
-    rect2[0] = rect2[0] - 1
-    screen.blit(birds[index], (0, y))
+    for i in range(10):
+        pygame.draw.rect(screen, color, rect1[i])
+        pygame.draw.rect(screen, color, rect2[i])
+        rect1[i][0] = rect1[i][0] - 1
+        rect2[i][0] = rect2[i][0] - 1
+        screen.blit(birds[index], (0, y))
     y = y + 2
     if index == 2:
         index = 0
